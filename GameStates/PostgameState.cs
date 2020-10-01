@@ -7,5 +7,11 @@ namespace D2D.Core
     public class PostgameState : GameState
     {
         public override bool IsGameActiveDuringState => false;
+
+        // Postgame state is a last state => no next states possible
+        public override bool IsNextStatePossible(GameState nextState)
+        {
+            return false;
+        }
     }
 }

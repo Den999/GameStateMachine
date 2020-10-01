@@ -9,28 +9,30 @@ namespace D2D.Core
     /// <summary>
     /// Powerful and safe game state machine which extensible (use classes instead of fixed enums)
     /// and allows to check is next state possible, count happened states
+    ///
+    /// In fact we could do game states as SO. But, it won`t be so useful in code.
     /// </summary>
     public class GameStateMachine : MonoBehaviour, ILazyCreating
     {
         /// <summary>
         /// Is there is no states yet?
         /// </summary>
-        public bool IsEmpty => states.Count == 0;
+        public bool IsEmpty => _states.Count == 0;
 
         /// <summary>
         /// Last state of game state machine or null if empty yet
         /// </summary>
-        public GameState Last => IsEmpty ? null : states.Last();
+        public GameState Last => IsEmpty ? null : _states.Last();
         
         /// <summary>
         /// List of states happened during game
         /// </summary>
-        private List<GameState> states = new List<GameState>();
+        private readonly List<GameState> _states = new List<GameState>();
         
         /// <summary>
         /// For each game state we have a list of subscribers' actions 
         /// </summary>
-        private Dictionary<Type, List<Subscriber>> subscribersMap = 
+        private readonly Dictionary<Type, List<Subscriber>> _subscribersMap = 
             new Dictionary<Type, List<Subscriber>>();
 
         /// <summary>
@@ -39,11 +41,11 @@ namespace D2D.Core
         public void AdjustActionToState<T>(GameObject owner, Action action) where T : GameState
         {
             // Init dictionary if needed
-            if (!subscribersMap.ContainsKey(typeof(T)))
-                subscribersMap[typeof(T)] = new List<Subscriber>();
+            if (!_subscribersMap.ContainsKey(typeof(T)))
+                _subscribersMap[typeof(T)] = new List<Subscriber>();
             
             // Add new subscriber
-            subscribersMap[typeof(T)].Add(new Subscriber
+            _subscribersMap[typeof(T)].Add(new Subscriber
             {
                 owner = owner,
                 action = action,
@@ -53,10 +55,8 @@ namespace D2D.Core
         /// <summary>
         /// Push new game state and notify others of it
         /// </summary>
-        public void PushState<T>() where T : GameState, new()
+        public void PushState(GameState newState)
         {
-            var newState = new T();
-
             if (!IsStatePossible(newState))
             {
                 Debug.LogError($"{newState.GetType().FullName} can't go after " +
@@ -64,7 +64,7 @@ namespace D2D.Core
                 return;
             }
 
-            states.Add(newState);
+            _states.Add(newState);
             
             Emit(newState.GetType());
             Emit(typeof(GameState));
@@ -77,17 +77,8 @@ namespace D2D.Core
         {
             if (Last == null)
                 return true;
-
-            if (Last.PossibleNextStates.Count == 0)
-                return false;
             
-            foreach (GameState p in Last.PossibleNextStates)
-            {
-                if (p.GetType() == newState.GetType())
-                    return true;
-            }
-
-            return false;
+            return Last.IsNextStatePossible(newState);
         }
 
         /// <summary>
@@ -95,14 +86,14 @@ namespace D2D.Core
         /// </summary>
         private void Emit(Type t)
         {
-            if (subscribersMap.ContainsKey(t))
+            if (_subscribersMap.ContainsKey(t))
             {
                 // There is nobody subscribed to this state
-                if (subscribersMap[t] == null)
+                if (_subscribersMap[t] == null)
                     return;
                 
                 // Use for safety try catch
-                var subscribers = subscribersMap[t];
+                var subscribers = _subscribersMap[t];
                 for (int i = 0; i < subscribers.Count; i++)
                 {
                     // Remove subscriber if it gameObject or action isn`t exists anymore 
@@ -126,7 +117,7 @@ namespace D2D.Core
         public int Count<T>() where T : GameState
         {
             int matches = 0;
-            foreach (GameState s in states)
+            foreach (GameState s in _states)
             {
                 if (s.GetType() == typeof(T))
                     matches++;

@@ -7,11 +7,13 @@ namespace D2D.Core
     /// </summary>
     public class RunningState : GameState
     {
-        public override List<GameState> PossibleNextStates => new List<GameState>() 
+        protected override GameState[] PossibleNextStates => new GameState[] 
         {
             new PauseState(),
             new WinState(),
             new LoseState(),
         };
+
+        public override bool IsGameActiveDuringState => true;
     }
 }

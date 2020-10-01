@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace D2D.Core
@@ -7,9 +8,9 @@ namespace D2D.Core
     /// </summary>
     public class LoseState : GameState
     {
-        public override List<GameState> PossibleNextStates => new List<GameState>() 
+        protected override GameState[] PossibleNextStates => new GameState[] 
         {
-            new PostgameState()
+            new PostgameState(),
         };
         public override bool IsGameActiveDuringState => false;
     }

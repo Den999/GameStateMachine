@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace D2D.Core
@@ -7,9 +8,9 @@ namespace D2D.Core
     /// </summary>
     public class PauseState : GameState
     {
-        public override List<GameState> PossibleNextStates => new List<GameState>() 
+        protected override GameState[] PossibleNextStates => new GameState[] 
         {
-            new RunningState()
+            new RunningState(), 
         };
         public override bool IsGameActiveDuringState => false;
     }

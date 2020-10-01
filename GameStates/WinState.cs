@@ -7,7 +7,7 @@ namespace D2D.Core
     /// </summary>
     public class WinState : GameState
     {
-        public override List<GameState> PossibleNextStates => new List<GameState>() 
+        protected override GameState[] PossibleNextStates => new GameState[] 
         {
             new PostgameState()
         };
