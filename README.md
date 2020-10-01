@@ -3,7 +3,7 @@ Flexible and configurable game state machine for unity (finite state machine).
 - Extendable (supports classes instead of enums)
 - Useful (you needn`t to usubsrcibe, it will happen automatically)
 - You can set up next supported states for any specific state
-- No signletons and static classes!
+- No singletons and static classes!
 
 Use sample:
 ```csharp
@@ -16,7 +16,7 @@ private void Start()
     GameStateMachine.AdjustActionToState<WinState>(gameObject, ShowWindow);
 
     // Push running state
-    GameStateMachine.PushState<RunningState>();
+    GameStateMachine.PushState(new RunningState());
 
     // Check for the last state and get info about it
     if (GameStateMachine.Last.IsGameActiveDuringState)
@@ -25,20 +25,19 @@ private void Start()
     }
 
     // Push your custom state
-    GameStateMachine.PushState<MyCustomState>();
+    GameStateMachine.PushState(new MyCustomState());
 }
 
 // Create your own states!
 public class MyCustomState : GameState
 {
     // Which states can be after our custom state?
-    public override List<GameState> PossibleNextStates =>
-        new List<GameState>
-        {
-            new RunningState(),
-            new WinState(),
-            new LoseState(),
-        };
+    public override GameState[] PossibleNextStates => GameState[]
+    {
+        new RunningState(),
+        new WinState(),
+        new LoseState(),
+    };
 
     // The state is not active (like pause, etc.)
     public override bool IsGameActiveDuringState => false;
