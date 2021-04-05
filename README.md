@@ -1,7 +1,7 @@
 # GameStateMachine
 Flexible and configurable game state machine for Unity. (finite state machine).
 - Supports custom game states. You can create them!
-- Easy to use (you don`t need to usubsrcibe, it will be happen automatically)
+- Easy to use and safe (you don`t need to usubsrcibe, it will be happen automatically)
 - No singletons and static classes.
 
 Use sample:
