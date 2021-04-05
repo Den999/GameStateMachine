@@ -1,9 +1,9 @@
 # GameStateMachine
-Flexible and configurable game state machine for unity (finite state machine).
-- Extendable (supports classes instead of enums)
-- Useful (you needn`t to usubsrcibe, it will happen automatically)
-- You can set up next supported states for any specific state
-- No singletons and static classes!
+Flexible and configurable game state machine for Unity. (finite state machine).
+- Extendable. (supports classes instead of enums)
+- Useful (you don`t need to usubsrcibe, it will be happen automatically)
+- Supports custom game states. You can create them!
+- No singletons and static classes.
 
 Use sample:
 ```csharp
