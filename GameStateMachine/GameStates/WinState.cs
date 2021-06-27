@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace D2D.Core
 {
     /// <summary>
@@ -9,8 +7,11 @@ namespace D2D.Core
     {
         protected override GameState[] PossibleNextStates => new GameState[] 
         {
-            new PostgameState()
+            new PostgameState(),
         };
+        
         public override bool IsGameActiveDuringState => false;
+        
+        public override bool CanBeFirstState => true;
     }
 }

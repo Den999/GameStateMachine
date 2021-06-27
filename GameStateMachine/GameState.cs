@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace D2D.Core
 {
@@ -28,5 +27,13 @@ namespace D2D.Core
         /// PauseState sets it to false
         /// </summary>
         public abstract bool IsGameActiveDuringState { get; }
+        
+        // For states, such as pause state.
+        public abstract bool CanBeFirstState { get; }
+
+        public override string ToString()
+        {
+            return GetType().FullName.Split('.').Last();
+        }
     }
 }

@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-
 namespace D2D.Core
 {
     /// <summary>
-    /// Game paused (all active objects were frozen)
+    /// Player died or time expired
     /// </summary>
-    public class PauseState : GameState
+    public class LoseState : GameState
     {
         protected override GameState[] PossibleNextStates => new GameState[] 
         {
-            new RunningState(), 
+            new PostgameState(),
         };
         public override bool IsGameActiveDuringState => false;
+
+        public override bool CanBeFirstState => true;
     }
 }

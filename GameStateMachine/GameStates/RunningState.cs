@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace D2D.Core
 {
     /// <summary>
@@ -15,5 +13,7 @@ namespace D2D.Core
         };
 
         public override bool IsGameActiveDuringState => true;
+        
+        public override bool CanBeFirstState => true;
     }
 }
