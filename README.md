@@ -1,30 +1,45 @@
 # GameStateMachine
 Flexible and configurable game state machine for Unity. (finite state machine).
+- Lightweight and have NO dependecies.
 - Supports custom game states. You can create them!
 - Easy to use and safe (you don`t need to usubsrcibe, it will be happen automatically)
 - No singletons and static classes.
 
 Use sample:
 ```csharp
-private void Start()
+public class Sample : MonoBehaviour
 {
-    // Find a game state machine object
-    GameStateMachine = FindObjectOfType<GameStateMachine>();
-
-    // On win state show window. Note, there is no need to unsubscribe!
-    GameStateMachine.AdjustActionToState<WinState>(gameObject, ShowWindow);
-
-    // Push running state
-    GameStateMachine.PushState(new RunningState());
-
-    // Check for the last state and get info about it
-    if (GameStateMachine.Last.IsGameActiveDuringState)
+    private void Start()
     {
-        Debug.Log("The game is active! It is not a pause or postgame");
-    }
+        // Just like a FindObjectOfType, but if it is not exists => create it
+        // (better singleton version)
+        var gsm = this.FindLazy<GameStateMachine>();
 
-    // Push your custom state
-    GameStateMachine.PushState(new MyCustomState());
+        gsm.On<RunningState>(() => Debug.Log("Running"));
+
+        gsm.Push(new RunningState());
+    }
+}
+    
+// On player trigger the finish => push WinState
+public class Finish : GameStateMachineUser
+{
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Player p))
+            StateMachine.Push(new WinState());
+    }
+}
+
+// Stop player on game finish (WinState or LoseState)
+public class PlayerMovement : GameStateMachineUser
+{
+    private float _speedFactor = 1;
+
+    protected override void OnGameFinish()
+    {
+        _speedFactor = 0;
+    }
 }
 
 // Create your own states!
