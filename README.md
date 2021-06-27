@@ -22,6 +22,7 @@ public class Sample : MonoBehaviour
 }
     
 // On player trigger the finish => push WinState
+// GameStateMachineUser hashes StateMachine for us :)
 public class Finish : GameStateMachineUser
 {
     private void OnTriggerEnter(Collider other)
@@ -31,7 +32,7 @@ public class Finish : GameStateMachineUser
     }
 }
 
-// Stop player on game finish (WinState or LoseState)
+// OnGameFinish will be called on WinState or LoseState (from GameStateMachineUser) 
 public class PlayerMovement : GameStateMachineUser
 {
     private float _speedFactor = 1;
