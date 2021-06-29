@@ -15,8 +15,10 @@ public class Sample : MonoBehaviour
         // (better singleton version)
         var stateMachine = this.FindLazy<GameStateMachine>();
 
+        // Subscribing
         stateMachine.On<RunningState>(() => Debug.Log("Running"));
 
+        // Pushing states
         stateMachine.Push(new RunningState());
     }
 }
