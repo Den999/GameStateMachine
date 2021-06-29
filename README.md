@@ -4,7 +4,7 @@
 - Easy to use and safe (no scene setup, all you need will be created automatically at runtime)
 - No singletons and static classes.
 
-Basic usage:
+## Basic usage:
 ```csharp
 public class Sample : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class Sample : MonoBehaviour
 }
 ```
 
-Common use cases:
+## Common use cases:
 ```csharp
 // On player trigger the finish => push WinState
 // GameStateMachineUser hashes StateMachine for us :)
@@ -50,7 +50,7 @@ public class PlayerMovement : GameStateMachineUser
 }
 ```
 
-Custom states be like:
+## Custom states be like:
 ```csharp
 // Create your own states!
 public class MyCustomState : GameState
