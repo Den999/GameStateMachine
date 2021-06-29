@@ -2,7 +2,7 @@
 - Lightweight and have NO dependecies.
 - Supports custom game states. You can create them!
 - Easy to use and safe (no scene setup, all you need will be created automatically at runtime)
-- No singletons and static classes.
+- NO singletons and static classes.
 
 ## Basic usage:
 ```csharp
