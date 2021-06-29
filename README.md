@@ -5,7 +5,7 @@ Flexible and configurable game state machine for Unity. (finite state machine).
 - Easy to use and safe (you don`t need to usubsrcibe, it will be happen automatically)
 - No singletons and static classes.
 
-Use sample:
+Basic usage:
 ```csharp
 public class Sample : MonoBehaviour
 {
@@ -20,7 +20,10 @@ public class Sample : MonoBehaviour
         gsm.Push(new RunningState());
     }
 }
-    
+```
+
+Common use cases:
+```csharp
 // On player trigger the finish => push WinState
 // GameStateMachineUser hashes StateMachine for us :)
 public class Finish : GameStateMachineUser
@@ -42,7 +45,10 @@ public class PlayerMovement : GameStateMachineUser
         _speedFactor = 0;
     }
 }
+```
 
+Custom states be like:
+```csharp
 // Create your own states!
 public class MyCustomState : GameState
 {
