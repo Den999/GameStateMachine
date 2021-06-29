@@ -13,11 +13,11 @@ public class Sample : MonoBehaviour
     {
         // Just like a FindObjectOfType, but if it is not exists => create it
         // (better singleton version)
-        var gsm = this.FindLazy<GameStateMachine>();
+        var stateMachine = this.FindLazy<GameStateMachine>();
 
-        gsm.On<RunningState>(() => Debug.Log("Running"));
+        stateMachine.On<RunningState>(() => Debug.Log("Running"));
 
-        gsm.Push(new RunningState());
+        stateMachine.Push(new RunningState());
     }
 }
 ```
