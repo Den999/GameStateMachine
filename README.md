@@ -1,8 +1,7 @@
 # GameStateMachine
-Flexible and configurable game state machine for Unity. (finite state machine).
 - Lightweight and have NO dependecies.
 - Supports custom game states. You can create them!
-- Easy to use and safe (you don`t need to usubsrcibe, it will be happen automatically)
+- Easy to use and safe (no scene setup, all you need will be created automatically at runtime)
 - No singletons and static classes.
 
 Basic usage:
@@ -17,9 +16,11 @@ public class Sample : MonoBehaviour
 
         // Subscribing
         stateMachine.On<RunningState>(() => Debug.Log("Running"));
+        stateMachine.On<LoseState, WinState>(() => Debug.Log("The game was finished (lose or win)"));
 
         // Pushing states
         stateMachine.Push(new RunningState());
+        stateMachine.Push(new WinState());
     }
 }
 ```
